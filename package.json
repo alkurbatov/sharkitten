@@ -1,0 +1,23 @@
+{
+  "name": "sharkitten",
+  "version": "0.0.1",
+  "description": "VA backend for the frontend.",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=development node --tls-cipher-list='ADH-AES256-SHA' src/index.js | ./node_modules/.bin/bunyan -L --color",
+    "lint": "node_modules/.bin/eslint --ignore-path .gitignore . --color -f table"
+  },
+  "author": "Alexander Kurbatov <alkurbatov@virtuozzo.com>",
+  "license": "GPL-3.0",
+  "engines": {
+    "node": ">=8.9.1"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "config": "^1.31.0",
+    "xml-js": "^1.6.7"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
