@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Purprose:
+# Completely reinstall Virtuozzo Automator Management Node
+# and clean up all required folders.
+
+yum remove -y va-mn-* va-cc-* vaconfig vzlicutils rdbmspp-debuginfo sqlite3odbc-debuginfo
+
+rm -rf /etc/opt/pva/cc
+rm -rf /var/opt/pva
+rm -rf /var/log/pva
+rm -rf /opt/pva
+
+yum clean all
+yum install -y va-mn-* va-cc-* vaconfig rdbmspp-debuginfo sqlite3odbc-debuginfo
+
+# Disable the release repos in order to avoid conflicts with the factory.
+# The following commands require yum-utils package.
+yum-config-manager --disable va-mn va-mn-updates
+
+# Increase verbosity
+/opt/pva/mn/bin/vzlxmlman -s 6 -i data/system/configuration/log_level /var/opt/pva/mn/etc/vzagent.conf
+sed -i 's:<level>1</level>:<level>6</level>:' /etc/opt/pva/cc/pvacc.conf
+sed -i 's:<agent_level>3</agent_level>:<agent_level>6</agent_level>:' /etc/opt/pva/cc/pvacc.conf
+
+for i in va-mn va-cc; do
+    systemctl start ${i}
+
+    if [ ${PIPESTATUS[0]} != 0 ]; then
+        echo "Failed to start ${i} service"
+        exit 1
+    fi
+done
+
