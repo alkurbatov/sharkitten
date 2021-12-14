@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development node --tls-cipher-list='ADH-AES256-SHA' src/index.js | ./node_modules/.bin/bunyan -L --color",
-    "lint": "node_modules/.bin/eslint --ignore-path .gitignore . --color -f table"
+    "lint": "node_modules/.bin/eslint --ignore-path .gitignore . --color"
   },
   "author": "Alexander Kurbatov <alkurbatov@virtuozzo.com>",
   "license": "GPL-3.0",
@@ -18,6 +18,6 @@
     "xml-js": "^1.6.7"
   },
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "eslint": "^8.4.1"
   }
 }
